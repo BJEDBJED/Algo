@@ -106,6 +106,37 @@ for j in range(1,len(ceny)):
 x=sorted(roznice)
 print(x[-1],x[-2])
 
-#Maksymalny Zysk z Operacji Kupna-Sprzedaży z Opłatami Transakcyjnymi:
-#Problem: Oprócz cen akcji, każda transakcja wiąże się z pewną stałą opłatą transakcyjną. Oblicz maksymalny zysk, który możesz osiągnąć, biorąc pod uwagę te opłaty.
-#Cel: Maksymalizacja zysku po odjęciu wszystkich opłat transakcyjnych.
+#NEW
+
+def minmax(price):
+    if len(price) < 2:
+        return None, None
+        
+    min_price = price[0]
+    max_profit = price[1] - price[0]
+    
+    for pr in price[1:]:
+        max_profit = max(max_profit, pr - min_price)
+        min_price = min(min_price, pr)
+    
+    return min_price, min_price + max_profit
+    
+    
+
+def maxprofit(price):
+    if len(price) < 2:
+        return 0
+        
+    max_profit = 0
+    for i in range(1, len(price)):
+        if price[i] > price[i - 1]:
+            max_profit += price[i] - price[i-1]
+
+    return max_profit
+
+prices = [7,1,5,3,6,4]
+profit = maxprofit(prices)
+min_price, max_profit = minmax(prices)
+print(profit)
+print(min_price)
+print(max_profit)
