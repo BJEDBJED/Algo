@@ -47,3 +47,40 @@ g.graph = [[0, 4, 0, 0, 0, 0, 0, 8, 0],
            ]
  
 g.dijkstra(0)
+
+#2
+
+import heapq
+
+def dijkstra(graph, start):
+    dist = { vertex: float('inf') for vertex in graph}
+    dist[start] = 0
+    
+    pq = [(0,start)]
+    
+    while pq:
+        current_dist, current_vertex = heapq.heappop(pq)
+        
+        if current_dist > dist[current_vertex]:
+            continue
+        
+        for neighbour, weight in graph[current_vertex].items():            distance = current_dist + weight
+            if distance < dist[neighbour]: 
+                dist[neighbour] = distance
+                heapq.heappush(pq, (distance, neighbour))
+    
+
+
+    return dist
+
+graph = {
+    'A':{'B':1, 'C': 4},
+    'B':{'A':1, 'C': 2, 'D': 5},
+    'C':{'A':4, 'B': 2, 'D': 1},
+    'D':{'B':5, 'C': 1}
+    }
+    
+    
+start = 'A'
+shortest = dijkstra(graph, start)
+print(shortest)
